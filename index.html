@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jean de Dieu ADANHOUNME — Développeur Web Full-Stack Freelance</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body class="loading">
+
+  <!-- PRELOADER -->
+  <div id="loader">
+    <div class="ldr-content">
+      <div class="ldr-logo">JDD</div>
+      <div class="ldr-progress-wrap">
+        <div class="ldr-bar-bg">
+          <div id="ldr-bar"></div>
+        </div>
+        <span id="ldr-num">0%</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const bar = document.getElementById('ldr-bar');
+      const num = document.getElementById('ldr-num');
+      if (!bar || !num) return;
+
+      let progress = 0;
+      let targetProgress = 0;
+      let isWindowLoaded = false;
+
+      window.addEventListener('load', () => {
+        isWindowLoaded = true;
+      });
+
+      // Sécurité anti-blocage (4s max) en cas d'erreur de CDN ou de réseau
+      setTimeout(() => {
+        isWindowLoaded = true;
+        window.__jdd_main_loaded = true;
+      }, 4000);
+
+      function isReady() {
+        return isWindowLoaded && 
+               typeof gsap !== 'undefined' && 
+               typeof THREE !== 'undefined' && 
+               typeof ScrollTrigger !== 'undefined' && 
+               window.__jdd_main_loaded === true;
+      }
+
+      function ease(curr, tgt, spd = 0.08) {
+        return curr + (tgt - curr) * spd;
+      }
+
+      function tick() {
+        if (isReady()) {
+          targetProgress = 100;
+        } else {
+          if (targetProgress < 90) {
+            targetProgress += 0.45;
+          }
+        }
+
+        progress = ease(progress, targetProgress, 0.08);
+        if (targetProgress - progress < 0.2) {
+          progress = targetProgress;
+        }
+
+        const rounded = Math.floor(progress);
+        bar.style.width = rounded + '%';
+        num.textContent = rounded + '%';
+
+        if (rounded < 100) {
+          requestAnimationFrame(tick);
+        } else {
+          setTimeout(onComplete, 200);
+        }
+      }
+
+      function onComplete() {
+        const loader = document.getElementById('loader');
+        if (!loader) return;
+        document.body.classList.remove('loading');
+        window.__jdd_loader_done = true;
+        
+        if (typeof gsap !== 'undefined') {
+          window.dispatchEvent(new Event('jdd_loader_complete'));
+        } else {
+          loader.style.transition = 'transform 0.8s cubic-bezier(0.85, 0, 0.15, 1)';
+          loader.style.transform = 'translateY(-100%)';
+          setTimeout(() => {
+            loader.style.display = 'none';
+          }, 800);
+        }
+      }
+
+      requestAnimationFrame(tick);
+    })();
+  </script>
+
+  <div id="cd"></div>
+  <div id="cr"></div>
+
+  <!-- NAV -->
+  <div id="mn">
+    <button id="mc">✕</button>
+    <a href="#hero" class="ml" data-k="nh">Home</a>
+    <a href="#about" class="ml" data-k="na">About</a>
+    <a href="#contact" class="ml" data-k="nc">Contact</a>
+  </div>
+  <nav id="nav">
+    <a href="#hero" class="nl">JDD</a>
+    <div class="nls">
+      <a href="#hero" class="na act" data-k="nh">Home</a>
+      <a href="#about" class="na" data-k="na">About</a>
+      <a href="#contact" class="na" data-k="nc">Contact</a>
+    </div>
+    <div class="nr">
+      <div class="lsw">
+        <button class="lb" data-l="en">EN</button>
+        <button class="lb on" data-l="fr">FR</button>
+      </div>
+      <button class="nhb" id="nhb" aria-label="Menu">
+        <svg width="22" height="14" viewBox="0 0 22 14">
+          <rect width="22" height="1.5" fill="black" />
+          <rect y="12.5" width="22" height="1.5" fill="black" />
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- PAGE HOME -->
+  <section id="hero">
+    <canvas id="hcv"></canvas>
+    <div class="w">
+      <div class="hi">
+        <div class="ht"><span class="hd"></span><span data-k="htag">Développeur Web Full-Stack · Cotonou, Bénin</span></div>
+        <h1 class="hn">
+          <span class="rl"><span class="rs">ADANHOUNME</span></span>
+          <span class="rl rl2"><span class="rs">JEAN DE DIEU</span></span>
+        </h1>
+        <div class="hb">
+          <p class="hs" data-k="hsub">Je conçois des applications web modernes et maintenables, avec un focus sur performance, UX et robustesse backend.</p>
+          <a href="#projects" class="hc">
+            <span class="hct" data-k="hcta">Voir les projets</span>
+            <span class="hci">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="sc">
+      <div class="scl"></div><span class="sct">scroll</span>
+    </div>
+  </section>
+
+  <div id="mq" aria-hidden="true">
+    <div class="mqw">
+      <span class="mqi">React.js<span class="mqd">·</span></span>
+      <span class="mqi">Next.js<span class="mqd">·</span></span>
+      <span class="mqi">Node.js<span class="mqd">·</span></span>
+      <span class="mqi">Express<span class="mqd">·</span></span>
+      <span class="mqi">PHP<span class="mqd">·</span></span>
+      <span class="mqi">Laravel<span class="mqd">·</span></span>
+      <span class="mqi">MySQL<span class="mqd">·</span></span>
+      <span class="mqi">PostgreSQL<span class="mqd">·</span></span>
+      <span class="mqi">MongoDB<span class="mqd">·</span></span>
+      <span class="mqi">TypeScript<span class="mqd">·</span></span>
+      <span class="mqi">TailwindCSS<span class="mqd">·</span></span>
+      <span class="mqi">REST APIs<span class="mqd">·</span></span>
+      <span class="mqi">Docker<span class="mqd">·</span></span>
+      <span class="mqi">Vue.js<span class="mqd">·</span></span>
+      <span class="mqi">Git / GitHub<span class="mqd">·</span></span>
+      <span class="mqi">React.js<span class="mqd">·</span></span>
+      <span class="mqi">Next.js<span class="mqd">·</span></span>
+      <span class="mqi">Node.js<span class="mqd">·</span></span>
+      <span class="mqi">Express<span class="mqd">·</span></span>
+      <span class="mqi">PHP<span class="mqd">·</span></span>
+      <span class="mqi">Laravel<span class="mqd">·</span></span>
+      <span class="mqi">MySQL<span class="mqd">·</span></span>
+      <span class="mqi">PostgreSQL<span class="mqd">·</span></span>
+      <span class="mqi">MongoDB<span class="mqd">·</span></span>
+      <span class="mqi">TypeScript<span class="mqd">·</span></span>
+      <span class="mqi">TailwindCSS<span class="mqd">·</span></span>
+      <span class="mqi">REST APIs<span class="mqd">·</span></span>
+      <span class="mqi">Docker<span class="mqd">·</span></span>
+      <span class="mqi">Vue.js<span class="mqd">·</span></span>
+      <span class="mqi">Git / GitHub<span class="mqd">·</span></span>
+    </div>
+  </div>
+
+  <section id="projects">
+    <div class="w">
+      <p class="sl" data-k="plbl">Réalisations phares</p>
+      <h2 class="st" data-k="ptit">Projets</h2>
+      <div class="bento">
+        <div class="bc b1">
+          <div class="bc-in">
+            <span class="bnum">01</span>
+            <div>
+              <h3 class="btit">AMBS Agency</h3>
+              <p class="bdesc" data-k="p1">Site vitrine complet pour une agence créative — architecture frontend solide, expérience utilisateur soignée et performances web optimisées.</p>
+              <div class="btags"><span class="btag">React</span><span class="btag">Node.js</span><span class="btag">UI/UX</span></div>
+            </div>
+          </div>
+          <a href="https://ambs-agency.com/" target="_blank" rel="noopener" class="blink" style="color:#fff;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M7 17L17 7M17 7H7M17 7v10" />
+            </svg>
+          </a>
+        </div>
+        <div class="bc b2">
+          <div class="bc-in">
+            <span class="bnum">02</span>
+            <div>
+              <h3 class="btit">Dial Agent Factory</h3>
+              <p class="bdesc" data-k="p2">Plateforme web pour une factory d'agents IA — interface métier avancée, architecture modulaire et intégration backend robuste.</p>
+              <div class="btags"><span class="btag">Next.js</span><span class="btag">API</span><span class="btag">IA</span></div>
+            </div>
+          </div>
+          <a href="https://factory.dialagent.fr/" target="_blank" rel="noopener" class="blink">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M7 17L17 7M17 7H7M17 7v10" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="quote">
+    <div class="w">
+      <blockquote class="qt" data-k="qtext">"Chaque mission est traitée avec une logique produit : clarté fonctionnelle, implémentation solide et livraison propre."
+      </blockquote>
+      <div class="qa">
+        <div class="qln"></div>
+        <p class="qau"><span style="color:var(--lime)">Jean de Dieu ADANHOUNME</span> &nbsp;·&nbsp; <span data-k="qattr">sa philosophie de travail</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="w">
+      <p class="sl" data-k="sklbl">Expertise</p>
+      <h2 class="st" data-k="sktit">Stack</h2>
+      <div class="skg">
+        <div class="ski">
+          <div class="skn">React.js</div>
+          <div class="skl" data-k="la">Maîtrisé</div>
+        </div>
+        <div class="ski">
+          <div class="skn">Next.js</div>
+          <div class="skl" data-k="la">Maîtrisé</div>
+        </div>
+        <div class="ski">
+          <div class="skn">Node.js</div>
+          <div class="skl" data-k="la">Maîtrisé</div>
+        </div>
+        <div class="ski">
+          <div class="skn">Express</div>
+          <div class="skl" data-k="la">Maîtrisé</div>
+        </div>
+        <div class="ski">
+          <div class="skn">PHP / Laravel</div>
+          <div class="skl" data-k="li">Intermédiaire</div>
+        </div>
+        <div class="ski">
+          <div class="skn">TypeScript</div>
+          <div class="skl" data-k="li">Intermédiaire</div>
+        </div>
+        <div class="ski">
+          <div class="skn">MySQL</div>
+          <div class="skl" data-k="li">Intermédiaire</div>
+        </div>
+        <div class="ski">
+          <div class="skn">PostgreSQL</div>
+          <div class="skl" data-k="li">Intermédiaire</div>
+        </div>
+        <div class="ski">
+          <div class="skn">MongoDB</div>
+          <div class="skl" data-k="li">Intermédiaire</div>
+        </div>
+        <div class="ski">
+          <div class="skn">TailwindCSS</div>
+          <div class="skl" data-k="la">Maîtrisé</div>
+        </div>
+        <div class="ski">
+          <div class="skn">Git / GitHub</div>
+          <div class="skl" data-k="la">Maîtrisé</div>
+        </div>
+        <div class="ski">
+          <div class="skn">Docker</div>
+          <div class="skl" data-k="ln">Notions</div>
+        </div>
+        <div class="ski">
+          <div class="skn">REST APIs</div>
+          <div class="skl" data-k="la">Maîtrisé</div>
+        </div>
+        <div class="ski">
+          <div class="skn">Vue.js</div>
+          <div class="skl" data-k="ll">En apprentissage</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE ABOUT -->
+  <section id="about">
+    <div class="w">
+      <h2 class="abh">Un développeur<br>de <span class="aba">Cotonou.</span></h2>
+      <div class="abg">
+        <p class="abi" data-k="abint">Développeur Web Full-Stack freelance basé à Cotonou, Bénin. Je conçois des applications web modernes et maintenables, avec un focus sur la performance, l'UX et la robustesse backend. Chaque mission est traitée avec une logique produit claire — de la spécification au déploiement.</p>
+        <div class="abm">
+          <div class="abav"><span class="avd"></span><span data-k="abav">Disponible pour de nouvelles missions</span></div>
+          <div>
+            <div class="ablc">Cotonou, Gbegamey · Bénin</div>
+            <div class="abls" data-k="abtg">Clients Bénin · France · Afrique de l'Ouest</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="story">
+    <div class="w">
+      <p class="sl" data-k="stlbl">Parcours</p>
+      <h2 class="st" data-k="sttit">Formation</h2>
+      <div class="tl">
+        <div class="tli">
+          <div class="tly">2020 — 2023</div>
+          <div class="tlt" data-k="st1t">Autodidacte Web</div>
+          <p class="tld" data-k="st1d">Cotonou, Bénin — Premiers projets web en autonomie. HTML, CSS, JavaScript, puis React et Node.js. L'apprentissage par la pratique comme seule règle.</p>
+        </div>
+        <div class="tli">
+          <div class="tly">2022 — now</div>
+          <div class="tlt">ESGIS · Informatique</div>
+          <p class="tld" data-k="edu1">Cotonou, Bénin — Formation en informatique et réseaux. Systèmes, architecture logicielle et développement. La théorie qui renforce la pratique quotidienne.</p>
+        </div>
+        <div class="tli">
+          <div class="tly">2023 — now</div>
+          <div class="tlt" data-k="st2t">Freelance Full-Stack</div>
+          <p class="tld" data-k="st2d">Projets clients réels. De la maquette au déploiement. Chaque mission est l'occasion de livrer de la valeur business concrète et mesurable.</p>
+        </div>
+        <div class="tli lb2">
+          <div class="tly">2025 +</div>
+          <div class="tlt" data-k="st3t">What's Next</div>
+          <p class="tld" data-k="st3d">Applications plus ambitieuses, APIs plus robustes, et la conviction que l'Afrique de l'Ouest produit des développeurs de classe mondiale.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="interests">
+    <div class="w">
+      <p class="sl" data-k="inlbl">Au-delà du code</p>
+      <h2 class="st" data-k="intit">L'humain</h2>
+      <div class="ing">
+        <div class="inc"><span class="ini">⚡</span>
+          <h3 class="int" data-k="i1t">Tech & Innovation</h3>
+          <p class="ind" data-k="i1d">Passionné par les nouvelles tendances du web et l'écosystème startup africain. La technologie comme levier de transformation réelle.</p>
+        </div>
+        <div class="inc"><span class="ini">△</span>
+          <h3 class="int" data-k="i2t">Gaming</h3>
+          <p class="ind" data-k="i2d">Les systèmes de jeu comme source d'inspiration pour la conception d'UX et de logiques produit. Le meilleur game design enseigne la fluidité.</p>
+        </div>
+        <div class="inc"><span class="ini">✦</span>
+          <h3 class="int" data-k="i3t">Lecture</h3>
+          <p class="ind" data-k="i3d">Business, entrepreneuriat, architecture logicielle. Les livres comme raccourcis vers l'expérience accumulée des autres — et les erreurs à éviter.</p>
+        </div>
+        <div class="inc"><span class="ini">🌍</span>
+          <h3 class="int" data-k="i4t">Afrique Digitale</h3>
+          <p class="ind" data-k="i4d">La conviction profonde que les développeurs africains sont en train de construire les prochains grands produits numériques du continent.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="philosophy">
+    <div class="w">
+      <p class="phj">「明確さ。確固さ。価値。」</p>
+      <blockquote class="phq">
+        <span data-k="ph1">Clarté fonctionnelle. Implémentation solide.</span><br>
+        <span class="phl" data-k="ph2">L'objectif est la valeur business.</span>
+      </blockquote>
+      <div class="qa" style="margin-top:3.5rem;">
+        <div class="qln"></div>
+        <p class="qau" style="color:var(--g600);">Jean de Dieu ADANHOUNME &nbsp;·&nbsp; <span data-k="phinsp">sa philosophie de travail</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section id="numbers">
+    <div class="w">
+      <p class="sl" data-k="nblbl">En chiffres</p>
+      <h2 class="st" data-k="nbtit">Impact</h2>
+      <div class="nbg">
+        <div class="nbi">
+          <div class="nbv">30<span>+</span></div>
+          <div class="nbl" data-k="nb1">Projets livrés</div>
+        </div>
+        <div class="nbi">
+          <div class="nbv">97<span>%</span></div>
+          <div class="nbl" data-k="nb2">Satisfaction client</div>
+        </div>
+        <div class="nbi">
+          <div class="nbv">3<span>+</span></div>
+          <div class="nbl" data-k="nb3">Années d'expérience</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TÉMOIGNAGES -->
+  <section id="testimony">
+    <div class="w">
+      <p class="sl" data-k="tmlbl">Ce qu'ils disent</p>
+      <h2 class="st" data-k="tmtit">Témoignages</h2>
+      <div class="tmg">
+        <div class="tmc">
+          <p class="tmq">Jean de Dieu a livré notre plateforme en avance sur le planning. Code propre, communication fluide, zéro surprise. C'est le développeur qu'on recommande sans hésiter à notre réseau.</p>
+          <div class="tma">
+            <div class="tmav">KB</div>
+            <div>
+              <div class="tman">Karim Bello</div>
+              <div class="tmar">Fondateur · TechHub Cotonou</div>
+            </div>
+          </div>
+        </div>
+        <div class="tmc">
+          <p class="tmq">Besoin urgent d'une API robuste intégrée à notre frontend React. Jean de Dieu a compris les enjeux métier immédiatement et a livré exactement ce qu'il fallait — proprement documenté.</p>
+          <div class="tma">
+            <div class="tmav">MF</div>
+            <div>
+              <div class="tman">Mélanie Fontaine</div>
+              <div class="tmar">Directrice Marketing · Startup · Paris</div>
+            </div>
+          </div>
+        </div>
+        <div class="tmc">
+          <p class="tmq">Rigueur technique, sens du produit et disponibilité — le triplé qu'on cherchait. Notre MVP est en production depuis plusieurs mois sans aucun incident majeur.</p>
+          <div class="tma">
+            <div class="tmav">AK</div>
+            <div>
+              <div class="tman">Ayodélé Kossou</div>
+              <div class="tmar">Co-fondateur · AgriTech Bénin</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="w">
+      <p class="sl" data-k="fqlbl">Questions fréquentes</p>
+      <h2 class="st" data-k="fqtit">FAQ</h2>
+      <div class="faqg">
+        <div class="faqi">
+          <button class="faqq">
+            Quel est ton délai de réponse habituel ?
+            <span class="faqic">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+            </span>
+          </button>
+          <div class="faqa">
+            <p class="faqat">Je réponds sous 24h en semaine. La faisabilité et le délai estimé sont confirmés dans les 48h suivant le premier échange. Je privilégie la clarté dès le début pour éviter les mauvaises surprises.</p>
+          </div>
+        </div>
+        <div class="faqi">
+          <button class="faqq">
+            Tu travailles en remote uniquement ?
+            <span class="faqic">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+            </span>
+          </button>
+          <div class="faqa">
+            <p class="faqat">Oui, 100% remote. Je collabore avec des clients au Bénin, en France et partout en Afrique de l'Ouest. Les outils de communication modernes permettent une collaboration fluide quelle que soit la localisation.</p>
+          </div>
+        </div>
+        <div class="faqi">
+          <button class="faqq">
+            Quels types de projets acceptes-tu ?
+            <span class="faqic">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+            </span>
+          </button>
+          <div class="faqa">
+            <p class="faqat">Applications web full-stack, APIs REST, MVPs de startups, intégrations frontend/backend, refactoring de bases de code existantes. Je priorise les projets avec une logique produit claire et un objectif business défini.</p>
+          </div>
+        </div>
+        <div class="faqi">
+          <button class="faqq">
+            Proposes-tu une maintenance après livraison ?
+            <span class="faqic">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+            </span>
+          </button>
+          <div class="faqa">
+            <p class="faqat">Oui, une période de support de 30 jours est incluse dans chaque mission. Elle couvre les corrections de bugs et les ajustements mineurs. Au-delà, un contrat de maintenance mensuel peut être établi selon les besoins.</p>
+          </div>
+        </div>
+        <div class="faqi">
+          <button class="faqq">
+            Sur quelle plateforme freelance peut-on te trouver ?
+            <span class="faqic">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+            </span>
+          </button>
+          <div class="faqa">
+            <p class="faqat">Je suis actif sur ComeUp sous le profil <strong>@johndev</strong>. Vous pouvez aussi me contacter directement via email ou WhatsApp pour démarrer plus rapidement sans intermédiaire.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE CONTACT -->
+  <section id="contact">
+    <div class="w">
+      <p class="sl" data-k="ctlbl">Travaillons ensemble</p>
+      <h2 class="cth">
+        <span data-k="ct1">Construisons</span><br>
+        <span class="acc" data-k="ct2">quelque chose</span><br>
+        <span data-k="ct3">ensemble.</span>
+      </h2>
+      <p class="cts" data-k="ctd">Vous cherchez un développeur Full-Stack qui livre proprement, pense produit et communique clairement ? Si c'est votre projet — parlons.</p>
+    </div>
+  </section>
+
+  <section id="cemail">
+    <div class="w">
+      <p class="sl" data-k="emlbl">Email</p>
+      <a id="em-a" href="#" class="el">
+        <span class="et" id="em-t">johndevadhm@gmail.com</span>
+        <span class="ei">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M7 17L17 7M17 7H7M17 7v10" />
+          </svg>
+        </span>
+      </a>
+    </div>
+  </section>
+
+  <section id="social">
+    <div class="w">
+      <p class="sl" data-k="soclbl">Réseaux</p>
+      <ul class="socl">
+        <li>
+          <a href="https://github.com/jeanadhm" target="_blank" rel="noopener" class="soca">
+            <div class="socll"><span class="socn">GitHub</span><span class="soch">@jeanadhm</span></div>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M7 17L17 7M17 7H7M17 7v10" />
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a href="https://www.linkedin.com/in/donald-adanhounme-966b02278" target="_blank" rel="noopener" class="soca">
+            <div class="socll"><span class="socn">LinkedIn</span><span class="soch">Jean de Dieu ADANHOUNME</span></div>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M7 17L17 7M17 7H7M17 7v10" />
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a href="https://comeup.com/fr/@johndev" target="_blank" rel="noopener" class="soca">
+            <div class="socll"><span class="socn">ComeUp</span><span class="soch">@johndev</span></div>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M7 17L17 7M17 7H7M17 7v10" />
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a href="https://wa.me/22953875795" target="_blank" rel="noopener" class="soca">
+            <div class="socll"><span class="socn">WhatsApp</span><span class="soch">+229 53875795</span></div>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M7 17L17 7M17 7H7M17 7v10" />
+            </svg>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="location">
+    <div class="w">
+      <p class="locl" data-k="loclbl">Basé à</p>
+      <h2 class="locn">COTONOU,<br>GBEGAMEY</h2>
+      <p class="locs"><span class="locd"></span><span data-k="locsub">Bénin, Afrique de l'Ouest · GMT+1</span></p>
+    </div>
+  </section>
+
+  <footer>
+    <span class="ftc">© 2026 Conçu et développé par <a href="mailto:justs4857@gmail.com" style="color:var(--lime);text-decoration:none;">Caleb_dev</a> · <a href="https://github.com/egbami" target="_blank" rel="noopener" style="color:var(--g400);text-decoration:none;">@egbami</a> — UI/UX Designer &amp; Développeur Frontend</span>
+    <span class="ftn">JDD</span>
+    <div class="ftck">
+      <span class="ftck-f">🇧🇯 Bénin · GMT+1</span>
+      <span id="ftt">--:--:--</span>
+      <span id="ftd">---</span>
+    </div>
+  </footer>
+
+  <script data-cfasync="false" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script data-cfasync="false" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script data-cfasync="false" src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script data-cfasync="false" src="main.js"></script>
+
+</body>
+
+</html>
